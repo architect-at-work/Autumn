@@ -21,7 +21,7 @@ body.
 
 ### 3. HttpRequestExecutor Class
 
-The `HttpRequestExecutor` class is responsible for executing HTTP requests. It uses the `RestTemplate` class from the
+The `HttpRequestExecutor` class is responsible for executing HTTP requests. It uses the `RestClient` class from the
 Spring framework to send HTTP requests and receive responses. The `execute` method takes a `TestCase` object as an
 argument, makes an HTTP request based on the `Act` part of the `TestCase`, and returns a `Response` object.
 
@@ -50,14 +50,14 @@ part of the test case to validate the response body.
 
 ### Custom Matchers
 
-The application also includes custom matchers like **AnyDateTimeMatcher** and **AnyUUIDMatcher** for specific assertion
+The application also includes custom matchers like `AnyDateTimeMatcher` and `AnyUUIDMatcher` for specific assertion
 needs.
 
-For example, the **AnyDateTimeMatcher** can be used to assert that a given date-time string matches the expected format
+For example, the `AnyDateTimeMatcher` can be used to assert that a given date-time string matches the expected format
 without checking the actual value.
 This is useful when the actual date-time value is dynamic or not known in advance.
 
-the **AnyUUIDMatcher** can be used to assert that a given UUID string matches the expected format without checking the
+the `AnyUUIDMatcher` can be used to assert that a given UUID string matches the expected format without checking the
 actual value.
 
 There are some inbuilt matchers as well, such as `any-string`, `any-number`, etc.

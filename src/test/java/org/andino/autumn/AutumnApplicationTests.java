@@ -8,6 +8,7 @@ import org.junit.jupiter.api.TestFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 public class AutumnApplicationTests {
 
-    private final HttpRequestExecutor httpRequestExecutor = new HttpRequestExecutor(new RestTemplate(), new ObjectMapper());
+    private final HttpRequestExecutor httpRequestExecutor = new HttpRequestExecutor(RestClient.create(), new ObjectMapper());
     private final YamlReader yamlReader = new YamlReader();
 
     @TestFactory

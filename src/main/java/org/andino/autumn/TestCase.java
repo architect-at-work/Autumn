@@ -1,6 +1,8 @@
 package org.andino.autumn;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +30,10 @@ public class TestCase {
 
         public URI getUri() {
             return URI.create(url);
+        }
+
+        public JsonNode getBody() {
+            return body == null ? JsonNodeFactory.instance.nullNode() : body;
         }
     }
 

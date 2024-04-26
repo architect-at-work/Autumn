@@ -7,13 +7,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 
 
 @AllArgsConstructor
 @Slf4j
 public class HttpRequestExecutor {
-    final RestTemplate restTemplate;
+    final RestClient restClient;
     final ObjectMapper objectMapper;
 
     public Response execute(TestCase testCase) {
@@ -23,9 +23,7 @@ public class HttpRequestExecutor {
     }
 
     private Response invoke(TestCase.Act request, MultiValueMap<String, String> headers) {
-        HttpEntity<JsonNode> body = new HttpEntity<>(objectMapper.convertValue(request.getBody(),
-                JsonNode.class), headers);
-        final var exchange = restTemplate.exchange(request.getUri(), request.getMethod(), body, JsonNode.class);
-        return new Response(exchange.getStatusCode(), exchange.getBody());
+        final var response = restClient.method(request.getMethod()).uri(request.getUri()).body(request.getBody()).retrieve().toEntity(JsonNode.class);
+        return new Response(response.getStatusCode(), response.getBody());
     }
 }
