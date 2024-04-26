@@ -41,11 +41,72 @@ library is used to convert JSON and YAML data to and from `JsonNode` objects.
 The framework leverages the dynamic test capabilities of the JUnit library. Each YAML file is treated as a separate
 test, allowing for efficient execution and reporting of test results.
 
+## JSON Assertions with json-unit
+
+The Autumn codebase uses the json-unit library for writing assertions for JSON data in tests. It provides a fluent API
+for comparing expected and actual JSON data, and supports various comparison modes, such as ignoring extra fields,
+treating null and missing fields as equals, and more. The assertThatJson method from json-unit is used in the Assert
+part of the test case to validate the response body.
+
+### Custom Matchers
+
+The application also includes custom matchers like **AnyDateTimeMatcher** and **AnyUUIDMatcher** for specific assertion
+needs.
+
+For example, the **AnyDateTimeMatcher** can be used to assert that a given date-time string matches the expected format
+without checking the actual value.
+This is useful when the actual date-time value is dynamic or not known in advance.
+
+the **AnyUUIDMatcher** can be used to assert that a given UUID string matches the expected format without checking the
+actual value.
+
+There are some inbuilt matchers as well, such as `any-string`, `any-number`, etc.
+
+```json
+{
+  "id": "${json-unit.any-string}",
+  "createdAt": "${json-unit.matches:any-date-time}"
+}
+```
+
 ## Build Configuration
 
 The build configuration is defined in the `build.gradle` file. The project uses the Spring Boot Gradle plugin, the
 Spring Dependency Management Gradle plugin, and the Test Logger Gradle plugin. The project's dependencies include the
 Spring Boot Starter, Jackson Databind, Jackson Dataformat YAML, and Lombok.
+
+## Running the Tests
+
+To run the tests, execute the following command:
+
+```shell
+./gradlew test
+```
+
+report in console will look like this:
+
+```shell
+> Task :test
+
+org.andino.autumn.AutumnApplicationTests
+
+  runAllTestCasesInResources()
+
+    Test successfully-add-macbook.yml PASSED (1.1s)
+    Test successfully-get-macbook-by-id.yml PASSED
+
+SUCCESS: Executed 2 tests in 1.7s
+```
+
+html report will be generated in `build/reports/tests/test/index.html`
+
+## Future Enhancements
+
+In the future, the Autumn framework will be extended to support calling multiple APIs either sequentially or in
+parallel. This will involve extending the TestCase class to support multiple Act and Assert instances, modifying the
+HttpRequestExecutor class to execute multiple HTTP requests, and updating the test execution and assertion logic to
+handle multiple test cases and responses. This enhancement will allow QA teams to define complex test scenarios
+involving multiple API calls and assert the results in a flexible and efficient manner
 
 ## Conclusion
 
@@ -53,4 +114,5 @@ The Autumn codebase is a powerful tool for API automation testing.
 Its convention-based approach, combined with the dynamic test capabilities of JUnit,
 allows QA teams to define and run a large number of tests quickly and efficiently,
 without having to write repetitive code. It provides a good example of how to use the Spring Boot framework,
-the Jackson library, and the JUnit library in a Java project effectively.
+the Jackson library, and the JUnit library in a Java project effectively. The planned enhancements will further increase
+the flexibility and power of the Autumn framework, making it an even more valuable tool for API automation testing.

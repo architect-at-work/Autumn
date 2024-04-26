@@ -1,6 +1,8 @@
 package org.andino.autumn;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.andino.autumn.matchers.AnyZonedDateTimeMatcher;
+import org.andino.autumn.matchers.AnyUUIDMatcher;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 import org.springframework.core.io.Resource;
@@ -9,12 +11,10 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Stream;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
-import static net.javacrumbs.jsonunit.core.Option.IGNORING_EXTRA_FIELDS;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
@@ -37,7 +37,8 @@ public class AutumnApplicationTests {
 
 
                     assertThatJson(response.getResponseBody())
-                            .when(IGNORING_EXTRA_FIELDS)
+                            .withMatcher("any-zoned-date-time", new AnyZonedDateTimeMatcher())
+                            .withMatcher("any-uuid", new AnyUUIDMatcher())
                             .isEqualTo(testCase.getAsserts().getBody());
                 })).toList();
     }

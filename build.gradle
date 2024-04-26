@@ -30,7 +30,8 @@ dependencies {
 
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'net.javacrumbs.json-unit:json-unit-spring:3.2.7'
+    implementation 'net.javacrumbs.json-unit:json-unit-spring:3.2.7'
+    implementation 'org.hamcrest:hamcrest-core:2.2'
 }
 
 tasks.named('test') {
