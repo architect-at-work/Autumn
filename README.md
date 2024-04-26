@@ -88,7 +88,7 @@ report in console will look like this:
 ```shell
 > Task :test
 
-org.andino.autumn.AutumnApplicationTests
+org.andino.autumn.AutomationTests
 
   runAllTestCasesInResources()
 

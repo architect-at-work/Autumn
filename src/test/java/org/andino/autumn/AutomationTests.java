@@ -9,7 +9,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -19,15 +18,15 @@ import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
-public class AutumnApplicationTests {
+public class AutomationTests {
 
     private final HttpRequestExecutor httpRequestExecutor = new HttpRequestExecutor(RestClient.create(), new ObjectMapper());
     private final YamlReader yamlReader = new YamlReader();
 
     @TestFactory
-    public Collection<DynamicTest> runAllTestCasesInResources() throws IOException {
+    public Collection<DynamicTest> tests() throws IOException {
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        Resource[] resources = resolver.getResources("classpath*:*.yml");
+        Resource[] resources = resolver.getResources("classpath*:*.y*ml");
 
         return Stream.of(resources)
                 .parallel()
