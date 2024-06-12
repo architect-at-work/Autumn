@@ -1,0 +1,21 @@
+act:
+  url: https://hd-fulfillment-global-inventory-service-dev.ecomm-stg.cencosud.com/v0/ats/SKU2001?businessUnit=PARIS&countryCode=CL&nodeCodes=2001&ignoreOutOfStock=true
+  method: GET
+asserts:
+  status: 200
+  body: {
+    "atsItems": [
+      {
+        "businessUnit": "PARIS",
+        "countryCode": "CL",
+        "nodeCode": "2001",
+        "nodeId": "cbe0da67-e8d2-4b8a-bada-b298ef63d7d3",
+        "nodeType": "3PL",
+        "stockLevel": "IN_STOCK",
+        "quantity": {
+          "unitOfMeasure": "UNITS",
+          "value": 70.0
+        }
+      }
+    ]
+  }
