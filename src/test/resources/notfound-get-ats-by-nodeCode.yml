@@ -1,0 +1,5 @@
+act:
+  url: https://hd-fulfillment-global-inventory-service-dev.ecomm-stg.cencosud.com/v0/ats/SKU6010?businessUnit=PARIS&countryCode=CL&nodeCodes=2001&ignoreOutOfStock=true
+  method: GET
+asserts:
+  status: 404

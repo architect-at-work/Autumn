@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 
 
@@ -23,7 +24,12 @@ public class HttpRequestExecutor {
     }
 
     private Response invoke(TestCase.Act request, MultiValueMap<String, String> headers) {
-        final var response = restClient.method(request.getMethod()).uri(request.getUri()).body(request.getBody()).retrieve().toEntity(JsonNode.class);
-        return new Response(response.getStatusCode(), response.getBody());
+        try {
+            final var response = restClient.method(request.getMethod()).uri(request.getUri()).body(request.getBody()).retrieve().toEntity(JsonNode.class);
+            JsonNode responseBody = response.getBody() != null ? response.getBody() : objectMapper.createObjectNode();
+            return new Response(response.getStatusCode(), responseBody);
+        } catch (HttpClientErrorException e) {
+            return new Response(e.getStatusCode(), objectMapper.createObjectNode());
+        }
     }
 }

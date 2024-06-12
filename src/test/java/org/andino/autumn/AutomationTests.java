@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.stream.Stream;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
@@ -35,12 +36,15 @@ public class AutomationTests {
 
                     Response response = httpRequestExecutor.execute(testCase);
 
-
-                    assertThatJson(response.getResponseBody())
-                            .withMatcher("any-zoned-date-time", new AnyZonedDateTimeMatcher())
-                            .withMatcher("any-uuid", new AnyUUIDMatcher())
-                            .isEqualTo(testCase.getAsserts().getBody());
+                    assertEquals(testCase.getAsserts().getStatus(), response.getStatus().value());
+                    if (testCase.getAsserts().getBody() != null) {
+                        assertThatJson(response.getResponseBody())
+                                .withMatcher("any-zoned-date-time", new AnyZonedDateTimeMatcher())
+                                .withMatcher("any-uuid", new AnyUUIDMatcher())
+                                .isEqualTo(testCase.getAsserts().getBody());
+                    }
                 })).toList();
+
     }
 
 }
